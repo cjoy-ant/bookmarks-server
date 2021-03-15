@@ -1,0 +1,19 @@
+{"message":"Bookmark with id b556ccda-7f79-4939-a232-12f089d437e2 created","level":"info"}
+{"message":"Bookmark with id b556ccda-7f79-4939-a232-12f089d437e2 not found.","level":"error"}
+{"message":"Bookmark with id b556ccda-7f79-4939-a232-12f089d437e2 not found.","level":"error"}
+{"message":"Bookmark with id 624c5833-1c9e-4da1-b99c-d10a5f46290f created","level":"info"}
+{"message":"Bookmark with id 85b4fc29-dc72-4298-81c1-6720acb4738a created","level":"info"}
+{"message":"Bookmark with id 85b4fc29-dc72-4298-81c1-6720acb4738a deleted.","level":"info"}
+{"message":"Bookmark with id 223d65ac-06be-49c4-b8b7-f4c3111e7641 created","level":"info"}
+{"message":"Bookmark with id 223d65ac-06be-49c4-b8b7-f4c3111e7641 deleted.","level":"info"}
+{"message":"URL must be a valid URL.","level":"error"}
+{"message":"URL must be a valid URL.","level":"error"}
+{"message":"URL must be a valid URL.","level":"error"}
+{"message":"Rating must be between 1 and 6 stars","level":"error"}
+{"message":"Rating must be between 1 and 6 stars","level":"error"}
+{"message":"Rating must be between 1 and 6 stars","level":"error"}
+{"message":"URL must be a valid URL.","level":"error"}
+{"message":"Rating must be between 1 and 6 stars","level":"error"}
+{"message":"Rating must be between 1 and 6 stars","level":"error"}
+{"message":"Bookmark with id 81ad160f-ffa9-40a9-97a1-221f44f04a85 created","level":"info"}
+{"message":"URL must be a valid URL.","level":"error"}
