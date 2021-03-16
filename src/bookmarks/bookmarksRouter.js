@@ -37,7 +37,7 @@ bookmarksRouter
       return res.status(400).send("Invalid data");
     }
     if (!Number.isInteger(rating) || rating < 0 || rating > 5) {
-      logger.error(`Rating must be between 0 and 5 stars`);
+      logger.error(`Rating must be a number between 0 and 5`);
       return res.status(400).send("Invalid data");
     }
     const id = uuid();
