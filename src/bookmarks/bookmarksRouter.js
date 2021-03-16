@@ -18,27 +18,27 @@ bookmarksRouter
     }
     if (!title) {
       logger.error(`Title is required`);
-      return res.status(400).send("Invalid data");
+      return res.status(400).send("Title is required");
     }
     if (!url) {
       logger.error(`URL is required`);
-      return res.status(400).send("Invalid data");
+      return res.status(400).send("Valid URL required");
     }
     if (!rating) {
       logger.error(`Rating is required`);
-      return res.status(400).send("Invalid data");
+      return res.status(400).send("Rating is required");
     }
     if (!desc) {
       logger.error(`Description is required`);
-      return res.status(400).send("Invalid data");
+      return res.status(400).send("Description is required");
     }
     if (!isURL(url)) {
-      logger.error(`URL must be a valid URL.`);
-      return res.status(400).send("Invalid data");
+      logger.error(`Invalid ${url} provided`);
+      return res.status(400).send("Valid URL is required");
     }
     if (!Number.isInteger(rating) || rating < 0 || rating > 5) {
-      logger.error(`Rating must be a number between 0 and 5`);
-      return res.status(400).send("Invalid data");
+      logger.error(`Invalid rating of '${rating}' provided`);
+      return res.status(400).send("Rating must be a number between 0 and 5");
     }
     const id = uuid();
     const bookmark = {
@@ -46,7 +46,7 @@ bookmarksRouter
       title,
       url,
       rating,
-      desc,
+      description,
     };
     bookmarks.push(bookmark);
     logger.info(`Bookmark with id ${id} created`);
