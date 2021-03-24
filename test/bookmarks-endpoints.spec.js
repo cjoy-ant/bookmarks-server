@@ -46,7 +46,7 @@ describe.only("Bookmarks Endpoints", () => {
     });
   });
 
-  describe(`GET /bookmarks/:bookmark_id`, () => {
+  describe(`GET /bookmarks/:id`, () => {
     context("Given no matching bookmark in database", () => {
       it("responds with 404 when bookmark doesn't exist", () => {
         const bookmarkId = 123456;
