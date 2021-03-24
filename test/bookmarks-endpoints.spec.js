@@ -64,7 +64,7 @@ describe.only("Bookmarks Endpoints", () => {
         return db.into("bookmarks").insert(testBookmarks);
       });
 
-      it("GET /bookmarks/:bookmark responds with 200 and the specified bookmark", () => {
+      it("GET /bookmarks/:id responds with 200 and the specified bookmark", () => {
         const bookmarkId = 2;
         const expectedBookmark = testBookmarks[bookmarkId];
 
