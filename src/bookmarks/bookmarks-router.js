@@ -23,8 +23,8 @@ bookmarksRouter
       })
       .catch(next);
   })
-  .post(bodyParser, (req, res) => {
-    const { title, url, rating } = req.body;
+  .post(bodyParser, (req, res, next) => {
+    const { title, url, rating, description } = req.body;
 
     for (const field of ["title", "url", "rating"]) {
       if (!req.body[field]) {
@@ -58,11 +58,8 @@ bookmarksRouter
 
     BookmarksService.insertBookmark(knexInstance, newBookmark)
       .then((bookmark) => {
-        logger.info(`Bookmark with id ${bookmarkid} created`);
-        res
-          .status(201)
-          .location(`/bookmarks/${bookmark.id}`)
-          .json(serializeBookmark(bookmark));
+        logger.info(`Bookmark with id ${bookmark.id} created`);
+        res.status(201).location(`/bookmarks/${bookmark.id}`).json(bookmark);
       })
       .catch(next);
   });
