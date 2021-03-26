@@ -232,20 +232,27 @@ describe("Bookmarks Endpoints", () => {
       description: `Bad image <img src="https://url.to.file.which/does-not.exist" onerror="alert(document.cookie);">. But not <strong>all</strong> bad.`,
     };
 
+    const expectedBookmark = {
+      ...maliciousBookmark,
+      title:
+        'Naughty naughty very naughty &lt;script&gt;alert("xss");&lt;/script&gt;',
+      description: `Bad image <img src="https://url.to.file.which/does-not.exist">. But not <strong>all</strong> bad.`,
+    };
+
     beforeEach("insert malicious bookmark", () => {
       return db.into("bookmarks").insert([maliciousBookmark]);
     });
 
     it("removes XSS attack content", () => {
       return supertest(app)
-        .get(`/bookmarks/${maliciousBookmark.id}`)
+        .get(`/bookmarks/`)
         .set("Authorization", `Bearer ${API_TOKEN}`)
         .expect(200)
         .expect((res) => {
-          expect(res.body.title).to.eql(maliciousBookmark.title);
-          expect(res.body.url).to.eql(maliciousBookmark.url);
-          expect(res.body.rating).to.eql(maliciousBookmark.rating);
-          expect(res.body.description).to.eql(maliciousBookmark.description);
+          expect(res.body[0].title).to.eql(expectedBookmark.title);
+          expect(res.body[0].url).to.eql(expectedBookmark.url);
+          expect(res.body[0].rating).to.eql(expectedBookmark.rating);
+          expect(res.body[0].description).to.eql(expectedBookmark.description);
         });
     });
   });

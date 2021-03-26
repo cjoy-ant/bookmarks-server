@@ -1,17 +1,18 @@
 const express = require("express");
+const xss = require("xss");
 const logger = require("../logger");
 const BookmarksService = require("./bookmarks-service");
 
 const bookmarksRouter = express.Router();
 const bodyParser = express.json();
 
-// const serializeBookmark = (bookmark) => ({
-// id: bookmark.id,
-// title: xss(bookmark.title),
-// url: bookmark.url,
-// description: xss(bookmark.description),
-// rating: Number(bookmark.rating),
-// });
+const serializeBookmark = (bookmark) => ({
+  id: bookmark.id,
+  title: xss(bookmark.title),
+  url: bookmark.url,
+  description: xss(bookmark.description),
+  rating: Number(bookmark.rating),
+});
 
 bookmarksRouter
   .route("/bookmarks")
@@ -19,7 +20,7 @@ bookmarksRouter
     const knexInstance = req.app.get("db");
     BookmarksService.getAllBookmarks(knexInstance)
       .then((bookmarks) => {
-        res.json(bookmarks);
+        res.json(bookmarks.map(serializeBookmark));
       })
       .catch(next);
   })
@@ -59,7 +60,10 @@ bookmarksRouter
     BookmarksService.insertBookmark(knexInstance, newBookmark)
       .then((bookmark) => {
         logger.info(`Bookmark with id ${bookmark.id} created`);
-        res.status(201).location(`/bookmarks/${bookmark.id}`).json(bookmark);
+        res
+          .status(201)
+          .location(`/bookmarks/${bookmark.id}`)
+          .json(serializeBookmark(bookmark));
       })
       .catch(next);
   });
@@ -83,7 +87,7 @@ bookmarksRouter
       .catch(next);
   })
   .get((req, res) => {
-    res.json(res.bookmark);
+    res.json(serializeBookmark(res.bookmark));
   })
   .delete((req, res) => {
     const { id } = req.params;
