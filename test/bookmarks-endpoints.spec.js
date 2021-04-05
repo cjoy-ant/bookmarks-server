@@ -294,4 +294,90 @@ describe("Bookmarks Endpoints", () => {
       });
     });
   });
+
+  describe(`PATCH /api/bookmarks/:id`, () => {
+    context(`Given no bookmarks`, () => {
+      it(`responds with 404`, () => {
+        const bookmarkId = 123456;
+        return supertest(app)
+          .patch(`/api/bookmarks/${bookmarkId}`)
+          .set("Authorization", `Bearer ${API_TOKEN}`)
+          .expect(404, { error: { message: `Bookmark Not Found` } });
+      });
+    });
+
+    context(`Given there are articles in the database`, () => {
+      const testBookmarks = makeBookmarksArray();
+
+      beforeEach("insert bookmarks", () => {
+        return db.into("bookmarks").insert(testBookmarks);
+      });
+
+      it(`responds with 204 and updates the bookmark`, () => {
+        const idToUpdate = 2;
+        const updateBookmark = {
+          title: "test - updated bookmark title",
+          url: "https://test-updated-url.com",
+          rating: 1,
+          description: "test - updated description",
+        };
+        const expectedBookmark = {
+          ...testBookmarks[idToUpdate],
+          ...updateBookmark,
+        };
+        return supertest(app)
+          .patch(`/api/bookmarks/${idToUpdate}`)
+          .set("Authorization", `Bearer ${API_TOKEN}`)
+          .send(updateBookmark)
+          .expect(204)
+          .then((res) =>
+            supertest(app)
+              .get(`/api/bookmarks/${idToUpdate}`)
+              .set("Authorization", `Bearer ${API_TOKEN}`)
+              .expect(expectedBookmark)
+          );
+      });
+
+      it(`response with 400 when no required fields supplied`, () => {
+        const idToUpdate = 2;
+        return supertest(app)
+          .patch(`/api/bookmarks/${idToUpdate}`)
+          .set("Authorization", `Bearer ${API_TOKEN}`)
+          .send({ irrelevantField: "foo" })
+          .expect(400, {
+            error: {
+              message: `Request body must contain 'title', 'url', and 'rating'`,
+            },
+          });
+      });
+
+      it(`responds wtih 204 when updating only a subset of fields`, () => {
+        const idToUpdate = 2;
+        const updateBookmark = {
+          title: "test - updated bookmark title",
+          //url: "https://test-updated-url.com",
+          //rating: 1,
+          //description: "test - updated description",
+        };
+        const expectedBookmark = {
+          ...testBookmarks[idToUpdate],
+          ...updateBookmark,
+        };
+        return supertest(app)
+          .patch(`/api/bookmarks/${idToUpdate}`)
+          .set("Authorization", `Bearer ${API_TOKEN}`)
+          .send({
+            ...updateBookmark,
+            fieldToIgnore: "should not be in GET response",
+          })
+          .expect(204)
+          .then((res) =>
+            supertest(app)
+              .get(`/api/bookmarks/${idToUpdate}`)
+              .set("Authorization", `Bearer ${API_TOKEN}`)
+              .expect(expectedBookmark)
+          );
+      });
+    });
+  });
 });
