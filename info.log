@@ -488,3 +488,12 @@
 {"message":"Bookmark with id 123456 not found.","level":"error"}
 {"message":"Bookmark with id '2' deleted.","level":"info"}
 {"message":"Bookmark with id 123456 not found.","level":"error"}
+{"message":"Unauthorized request to path: /bookmarks","level":"error"}
+{"message":"Unauthorized request to path: /bookmarks","level":"error"}
+{"message":"Unauthorized request to path: /bookmarks","level":"error"}
+{"message":"Unauthorized request to path: /api/bookmarks","level":"error"}
+{"message":"Unauthorized request to path: /api/bookmarks","level":"error"}
+{"message":"Unauthorized request to path: /api/bookmarks","level":"error"}
+{"message":"Unauthorized request to path: /api/bookmarks","level":"error"}
+{"message":"no pg_hba.conf entry for host \"70.173.18.209\", user \"treonqrusyxlwk\", database \"d4bb1f7tlkgner\", SSL off","level":"error"}
+{"message":"no pg_hba.conf entry for host \"70.173.18.209\", user \"treonqrusyxlwk\", database \"d4bb1f7tlkgner\", SSL off","level":"error"}
