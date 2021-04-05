@@ -47,14 +47,14 @@ describe("Bookmarks Endpoints", () => {
         .expect(401, { error: `Unauthorized request` });
     });
 
-    it(`responds with 401 Unauthorized for GET /api/bookmarks/:id`, () => {
+    it(`responds with 401 Unauthorized for GET /api/bookmarks/:bookmark_id`, () => {
       const bookmarkToGet = testBookmarks[2];
       return supertest(app)
         .get(`/api/bookmarks/${bookmarkToGet.id}`)
         .expect(401, { error: `Unauthorized request` });
     });
 
-    it(`responds with 401 Unauthorized for DELETE /api/bookmarks/:id`, () => {
+    it(`responds with 401 Unauthorized for DELETE /api/bookmarks/:bookmark_id`, () => {
       const bookmarkToDelete = testBookmarks[2];
       return supertest(app)
         .delete(`/api/bookmarks/${bookmarkToDelete.id}`)
@@ -88,7 +88,7 @@ describe("Bookmarks Endpoints", () => {
     });
   });
 
-  describe(`GET /api/bookmarks/:id`, () => {
+  describe(`GET /api/bookmarks/:bookmark_id`, () => {
     context("Given no matching bookmark in database", () => {
       it("responds with 404 when bookmark doesn't exist", () => {
         const bookmarkId = 123456;
@@ -106,7 +106,7 @@ describe("Bookmarks Endpoints", () => {
         return db.into("bookmarks").insert(testBookmarks);
       });
 
-      it("GET /api/bookmarks/:id responds with 200 and the specified bookmark", () => {
+      it("GET /api/bookmarks/:bookmark_id responds with 200 and the specified bookmark", () => {
         const bookmarkId = 2;
         const expectedBookmark = testBookmarks[bookmarkId];
 
@@ -118,7 +118,7 @@ describe("Bookmarks Endpoints", () => {
     });
   });
 
-  describe(`POST /api/bookmarks/:id`, () => {
+  describe(`POST /api/bookmarks/:bookmark_id`, () => {
     it(`responds with 400 'missing title' if not provided`, () => {
       const newBookmarkMissingTitle = {
         //title: "test-title",
@@ -257,7 +257,7 @@ describe("Bookmarks Endpoints", () => {
     });
   });
 
-  describe(`DELETE /api/bookmarks/:id`, () => {
+  describe(`DELETE /api/bookmarks/:bookmark_id`, () => {
     context("Given no bookmark in database", () => {
       it(`responds 404 when bookmark does not exist`, () => {
         const idToDelete = 123456;
@@ -295,7 +295,7 @@ describe("Bookmarks Endpoints", () => {
     });
   });
 
-  describe(`PATCH /api/bookmarks/:id`, () => {
+  describe(`PATCH /api/bookmarks/:bookmark_id`, () => {
     context(`Given no bookmarks`, () => {
       it(`responds with 404`, () => {
         const bookmarkId = 123456;

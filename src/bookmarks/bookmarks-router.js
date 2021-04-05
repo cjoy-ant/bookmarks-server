@@ -72,14 +72,14 @@ bookmarksRouter
   });
 
 bookmarksRouter
-  .route("/:id")
+  .route("/:bookmark_id")
   .all((req, res, next) => {
-    const { id } = req.params;
+    const { bookmark_id } = req.params;
     const knexInstance = req.app.get("db");
     BookmarksService.getById(knexInstance, id)
       .then((bookmark) => {
         if (!bookmark) {
-          logger.error(`Bookmark with id ${id} not found.`);
+          logger.error(`Bookmark with id ${bookmark_id} not found.`);
           return res.status(404).json({
             error: { message: `Bookmark Not Found` },
           });
@@ -93,11 +93,11 @@ bookmarksRouter
     res.json(serializeBookmark(res.bookmark));
   })
   .delete((req, res) => {
-    const { id } = req.params;
+    const { bookmark_id } = req.params;
     const knexInstance = req.app.get("db");
-    BookmarksService.deleteBookmark(knexInstance, id)
+    BookmarksService.deleteBookmark(knexInstance, bookmark_id)
       .then((rows) => {
-        logger.info(`Bookmark with id '${id}' deleted.`);
+        logger.info(`Bookmark with id '${bookmark_id}' deleted.`);
         res.status(204).end();
       })
       .catch();
@@ -119,7 +119,7 @@ bookmarksRouter
     const knexInstance = req.app.get("db");
     BookmarksService.updateBookmark(
       knexInstance,
-      req.params.id,
+      req.params.bookmark_id,
       bookmarkToUpdate
     )
       .then((numRowsAffected) => {
